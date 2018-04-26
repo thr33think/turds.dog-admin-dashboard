@@ -1,0 +1,39 @@
+.img {
+  width: 100%;
+  margin-bottom: 18%;
+}
+
+.image {
+  margin-top: 0 !important;
+}
+
+.card-picture {
+  width: 23%;
+  margin-bottom: 2%;
+}
+
+.container {
+  min-height: 100%;
+  width: 100%;
+}
+
+.card-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-flow: row wrap;
+  align-content: flex-end;
+
+  .mat-card {
+    margin: 0 5px 5px 0;
+    width: 100px;
+  }
+
+  img {
+    background-color: gray;
+  }
+
+  mat-card {
+    cursor: pointer;
+  }
+}

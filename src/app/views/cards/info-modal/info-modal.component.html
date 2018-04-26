@@ -1,0 +1,52 @@
+<mat-card>
+  <mat-card-content>
+    <img class="image" mat-card-image class="image" [src]="marker.image_base64">
+    <div class="infos">
+      <div *ngIf="!editMode">
+        <span fxFlex="100%">Id: {{marker.id}}</span>
+        <br>
+        <span fxFlex="100%">Epoch Timestamp: {{marker.timestamp}}</span>
+        <br>
+        <span fxFlex="100%">Readable: {{convertEpocToReadableDate(marker.timestamp)}}</span>
+        <br>
+        <span fxFlex="100%">Lat: {{marker.lat}}</span>
+        <br>
+        <span fxFlex="100%">Long: {{marker.long}}</span>
+        <br>
+        <span fxFlex="100%">Visible: {{marker.visible}}</span>
+        <br>
+      </div>
+      <div *ngIf="editMode">
+        Id: {{marker.id}}
+        <br>
+        Epoch Timestamp:<input type="text" [(ngModel)]="updateMarkerPlaceholder.timestamp" fxFlex="100%">
+        <br>
+        Readable: {{convertEpocToReadableDate(updateMarkerPlaceholder.timestamp)}}
+        <br>
+        Lat: <input type="number" [(ngModel)]="updateMarkerPlaceholder.lat" fxFlex="100%">
+        <br>
+        Long: <input type="number" [(ngModel)]="updateMarkerPlaceholder.long" fxFlex="100%">
+        <br>
+        Visible: <input type="text" [(ngModel)]="updateMarkerPlaceholder.visible" fxFlex="100%">
+        <br>
+      </div>
+      <mat-card-actions *ngIf="!editMode">
+        <button mat-icon-button (click)="toggleEditMode();">
+          <mat-icon>mode_edit</mat-icon>
+        </button>
+        <button mat-icon-button>
+          <mat-icon>delete</mat-icon>
+        </button>
+      </mat-card-actions>
+      <mat-card-actions *ngIf="editMode">
+        <button mat-icon-button (click)="updateMarker();">
+          <mat-icon>done</mat-icon>
+        </button>
+        <button mat-icon-button (click)="toggleEditMode();">
+          <mat-icon>highlight_off</mat-icon>
+        </button>
+      </mat-card-actions>
+    </div>
+    <div id="map" class="map"></div>
+  </mat-card-content>
+</mat-card>

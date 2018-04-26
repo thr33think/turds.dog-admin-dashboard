@@ -1,0 +1,17 @@
+<div class="card-container" *ngIf="!loading">
+  <mat-card *ngFor="let marker of markers" (click)="showMarkerDetails(marker)">
+    <mat-card-subtitle>
+      <span fxFlex="100%">{{convertEpocToReadableDate(marker.timestamp)}}</span>
+    </mat-card-subtitle>
+    <mat-card-content>
+      <img mat-card-image class="image" [src]="marker.image_base64">
+    </mat-card-content>
+    <!-- <mat-card-actions>
+      <mat-icon fxFlex="10%">mode_edit</mat-icon>
+      <mat-icon fxFlex="10%">delete</mat-icon>
+    </mat-card-actions> -->
+  </mat-card>
+</div>
+<div *ngIf="loading">
+  ... LOADING ...
+</div>
