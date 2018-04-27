@@ -29,7 +29,7 @@ export class InfoModalComponent implements OnInit {
   }
 
   onNoClick(): void {
-    this.dialogRef.close();
+    this.dialogRef.close(this.marker);
   }
 
   convertEpocToReadableDate(timestamp: string): string {

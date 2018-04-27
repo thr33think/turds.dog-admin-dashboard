@@ -1,3 +1,4 @@
+import { ShowCards } from './options-bar/options-bar.component';
 import { Component, OnInit, Inject } from '@angular/core';
 import { TurdApiService } from '../../services/turds-api.service';
 import { Markers, Marker } from './../../interfaces/marker';
@@ -13,6 +14,9 @@ import { InfoModalComponent } from './info-modal/info-modal.component';
 export class CardsComponent implements OnInit {
 
   markers: Marker[] = [];
+  visibleMarkers: Marker[];
+  hiddenMarkers: Marker[];
+  activeMarkers: Marker[];
   loading = true;
 
   constructor(private turdApi: TurdApiService, public dialog: MatDialog) { }
@@ -24,17 +28,24 @@ export class CardsComponent implements OnInit {
   async getMarkers () {
     this.loading = true;
     this.markers = [];
+    this.visibleMarkers = [];
+    this.hiddenMarkers = [];
     const markersWithoutImage = await this.turdApi.getMarkers();
+    markersWithoutImage.reverse();
     for (const marker of markersWithoutImage){
       this.markers.push(await this.getMarkerWithImage(marker.id));
+      if (marker.visible) {
+        this.visibleMarkers.push(await this.getMarkerWithImage(marker.id));
+      } else {
+        this.hiddenMarkers.push(await this.getMarkerWithImage(marker.id));
+      }
     }
-    this.markers.reverse();
+    this.activeMarkers = this.markers.slice();
     this.loading = false;
   }
 
   async getMarkerWithImage( markerId: string ): Promise<Marker> {
-    const marker = await this.turdApi.getMarker(markerId);
-    return marker;
+    return await this.turdApi.getMarker(markerId);
   }
 
   convertEpocToReadableDate (timestamp: string): string {
@@ -47,10 +58,23 @@ export class CardsComponent implements OnInit {
       data: marker
     });
 
-    dialogRef.afterClosed().subscribe((result) => {
-      /* When image deletion is active, we should re-render all the cards*/
-      console.log('The dialog was closed', result);
+    dialogRef.afterClosed().subscribe( result => {
+    /* This can be done more efficient without loading all markers */
+      if (this.activeMarkers.indexOf(result) === -1 && result) {
+        this.getMarkers();
+      }
     });
+  }
+
+  toggleNonvisibleCards (showCards: ShowCards) {
+    switch (showCards) {
+      case ShowCards.ALL: this.activeMarkers = this.markers.slice();
+        break;
+      case ShowCards.VISIBLE: this.activeMarkers = this.visibleMarkers.slice();
+        break;
+      case ShowCards.HIDDEN: this.activeMarkers = this.hiddenMarkers.slice();
+        break;
+    }
   }
 }
 

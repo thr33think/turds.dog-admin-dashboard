@@ -1,7 +1,10 @@
+<div class="card-container">
+  <app-options-bar (toggleNonvisibleCards)="toggleNonvisibleCards($event)" class="full-width margin-bot-10"></app-options-bar>
+</div>
 <div class="card-container" *ngIf="!loading">
-  <mat-card *ngFor="let marker of markers" (click)="showMarkerDetails(marker)">
+  <mat-card *ngFor="let marker of activeMarkers" (click)="showMarkerDetails(marker)">
     <mat-card-subtitle>
-      <span fxFlex="100%">{{convertEpocToReadableDate(marker.timestamp)}}</span>
+      <span [ngStyle]="{'color': (marker.visible ? 'green' : 'red')}" fxFlex="100%">{{convertEpocToReadableDate(marker.timestamp)}}</span>
     </mat-card-subtitle>
     <mat-card-content>
       <img mat-card-image class="image" [src]="marker.image_base64">
