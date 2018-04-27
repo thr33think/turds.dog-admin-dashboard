@@ -15,6 +15,7 @@ import { CardsComponent } from './views/cards/cards.component';
 
 import { TurdApiService } from './services/turds-api.service';
 import { InfoModalComponent } from './views/cards/info-modal/info-modal.component';
+import { OptionsBarComponent } from './views/cards/options-bar/options-bar.component';
 
 
 @NgModule({
@@ -22,7 +23,8 @@ import { InfoModalComponent } from './views/cards/info-modal/info-modal.componen
     AppComponent,
     MenuComponent,
     CardsComponent,
-    InfoModalComponent
+    InfoModalComponent,
+    OptionsBarComponent
   ],
   imports: [
     BrowserModule,

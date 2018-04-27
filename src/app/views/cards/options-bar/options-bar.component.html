@@ -1,0 +1,19 @@
+<mat-toolbar color="secondary">
+  <mat-toolbar-row>
+    <span class="spacer"></span>
+    <mat-form-field>
+      <mat-select [value]="selected" (valueChange)="intentToggleNonvisibleCards($event)">
+        <mat-option value="ALL">
+          All
+        </mat-option>
+        <mat-option value="VISIBLE">
+          Visible
+        </mat-option>
+        <mat-option value="HIDDEN">
+          Hidden
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <span class="spacer"></span>
+  </mat-toolbar-row>
+</mat-toolbar>
