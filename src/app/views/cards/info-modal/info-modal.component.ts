@@ -1,9 +1,10 @@
 import { TurdApiService } from './../../../services/turds-api.service';
 import { Marker } from './../../../interfaces/marker';
 import { Component, OnInit, Inject } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material';
 import { MatSnackBar } from '@angular/material';
 import * as moment from 'moment';
+import { ConfirmationComponent } from './confirmation/confirmation.component';
 
 declare const google: any;
 
@@ -21,11 +22,28 @@ export class InfoModalComponent implements OnInit {
     private turdApi: TurdApiService,
     public snackBar: MatSnackBar,
     public dialogRef: MatDialogRef<InfoModalComponent>,
-    @Inject(MAT_DIALOG_DATA) public marker: Marker) { }
+    @Inject(MAT_DIALOG_DATA) public marker: Marker,
+    public dialog: MatDialog) { }
 
   ngOnInit() {
     this.updateMap();
     this.updateMarkerPlaceholder.long = 0;
+  }
+
+  openConfirmationDialog(): void {
+    const dialogRef = this.dialog.open(ConfirmationComponent, {
+      width: '250px'
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (!result) {
+        return;
+      }
+      const deleteMarker = this.turdApi.deleteMarker(this.marker);
+      this.snackBar.open('DELETE WAS SUCCESSFUL!', '👌 ', {
+        duration: 3000
+      });
+    });
   }
 
   onNoClick(): void {

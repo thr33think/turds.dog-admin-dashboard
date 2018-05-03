@@ -16,6 +16,7 @@ import { CardsComponent } from './views/cards/cards.component';
 import { TurdApiService } from './services/turds-api.service';
 import { InfoModalComponent } from './views/cards/info-modal/info-modal.component';
 import { OptionsBarComponent } from './views/cards/options-bar/options-bar.component';
+import { ConfirmationComponent } from './views/cards/info-modal/confirmation/confirmation.component';
 
 
 @NgModule({
@@ -24,7 +25,8 @@ import { OptionsBarComponent } from './views/cards/options-bar/options-bar.compo
     MenuComponent,
     CardsComponent,
     InfoModalComponent,
-    OptionsBarComponent
+    OptionsBarComponent,
+    ConfirmationComponent
   ],
   imports: [
     BrowserModule,
@@ -39,6 +41,6 @@ import { OptionsBarComponent } from './views/cards/options-bar/options-bar.compo
   ],
   providers: [TurdApiService],
   bootstrap: [AppComponent],
-  entryComponents: [InfoModalComponent]
+  entryComponents: [InfoModalComponent, ConfirmationComponent]
 })
 export class AppModule { }
