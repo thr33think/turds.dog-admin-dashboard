@@ -58,9 +58,11 @@ export class CardsComponent implements OnInit {
       data: marker
     });
 
-    dialogRef.afterClosed().subscribe( result => {
-    /* This can be done more efficient without loading all markers */
-      if (this.activeMarkers.indexOf(result) === -1 && result) {
+    dialogRef.afterClosed().subscribe( (result: {update: boolean, marker: Marker}) => {
+      /* This can be done more efficient without loading all markers - also doesn't work as expected lol*/
+      if (result.update) {
+        this.getMarkers();
+      } else if (this.markers.indexOf(result.marker) === -1 && result.marker) {
         this.getMarkers();
       }
     });

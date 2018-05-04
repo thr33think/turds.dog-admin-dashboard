@@ -39,22 +39,43 @@ export class InfoModalComponent implements OnInit {
       if (!result) {
         return;
       }
-      const deleteMarker = this.turdApi.deleteMarker(this.marker);
-      this.snackBar.open('DELETE WAS SUCCESSFUL!', '👌 ', {
-        duration: 3000
-      });
+      this.deleteMarker(this.marker);
     });
   }
 
-  onNoClick(): void {
-    this.dialogRef.close(this.marker);
+  onNoClick(immediateUpdate): void {
+    this.dialogRef.close({update: immediateUpdate, marker: this.marker});
   }
 
   convertEpocToReadableDate(timestamp: string): string {
     return moment.unix(parseInt(timestamp, 10) / 1000).format('DD.MM.YY HH:mm:ss');
   }
 
-  updateMap() {
+  toggleEditMode () {
+    this.updateMarkerPlaceholder = { ...this.marker };
+    this.editMode = !this.editMode;
+  }
+
+  async updateMarker () {
+    const result = await this.turdApi.updateMarker({
+      ...this.updateMarkerPlaceholder,
+      visible: !!this.updateMarkerPlaceholder.visible
+    });
+    if (!result.error) {
+      this.snackBar.open('UPDATE WAS SUCCESSFUL!', '👌 ', {
+        duration: 3000
+      });
+      this.marker = result;
+      this.updateMap();
+      this.editMode = !this.editMode;
+    } else {
+      this.snackBar.open(result.result, '👎 ', {
+        duration: 3000
+      });
+    }
+  }
+
+  private updateMap()  {
     let map;
     let marker;
     const markerPosition = { lat: this.marker.lat, lng: this.marker.long };
@@ -71,35 +92,12 @@ export class InfoModalComponent implements OnInit {
     });
   }
 
-  toggleEditMode () {
-    this.updateMarkerPlaceholder = { ...this.marker };
-    this.editMode = !this.editMode;
-  }
-
-  async updateMarker () {
-    const result = await this.turdApi.updateMarker({
-      ...this.updateMarkerPlaceholder,
-      visible: this.convertStringToBool(this.updateMarkerPlaceholder.visible)
+  private deleteMarker(marker) {
+    const deleteMarker = this.turdApi.deleteMarker(marker);
+    this.snackBar.open('DELETE WAS SUCCESSFUL!', '👌 ', {
+      duration: 3000
     });
-    if (!result.error) {
-      this.snackBar.open('UPDATE WAS SUCCESSFUL!', '👌 ', {
-        duration: 3000
-      });
-      this.marker = result;
-      this.updateMap();
-      this.editMode = !this.editMode;
-    } else {
-      this.snackBar.open(result.result, '👎 ', {
-        duration: 3000
-      });
-    }
+    this.onNoClick(true);
   }
 
-  private convertStringToBool (string: string | boolean): boolean {
-    if (string === 'true') {
-      return true;
-    } else if (string === 'false') {
-      return false;
-    }
-  }
 }
