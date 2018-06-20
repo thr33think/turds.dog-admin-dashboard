@@ -7,7 +7,8 @@ export interface Markers {
 }
 
 export interface Marker extends Markers {
-  image_base64: string;
+  image_base64?: string;
+  image_url: string;
   error?: boolean;
   result?: string;
 }
