@@ -1,0 +1,36 @@
+sudo: required
+dist: trusty
+env:
+  global:
+    # DOCKER_USER
+    - secure: "hlIrG/3MavsJph71So/lHeCb307O6jgFkIh/3CWoXH5W0fYH7iLZvRz9YNelmOhY6gcqWhltdKzxx+sb1a+YXy+vp8+PCp2WErHtYKanrxNt26rTzwCb3fk16ybZGNuoTda/g0keczLuQiRUL9qlnT4z+IWxNBYSDNP/Saf6vxHT6FDo1YLswxAOBEUGd3bgCKOTIMH5PzLkIDnzQx1ChMka4+wiyLtpCXxsE0fzqN66LqgMdQ6TsdkxPSTY61Z2D9lXuL8jBepIQFpoV2FNw4aKhG9aiWSnqrVRK7phun7ynbECwfSosRMq9LPTlkQJnzRXnNQL0skN8PNdRmuUAc/t/GduQ3103//2++89Own5ZmWPsNNGNH7O7rxwuFLUKvES/uAicWbnETeguxBOhqsJxXJ3MJmaka56svoKhQOctb2zVi71GfRbySQeD91hime2+hVt1GKoN2ujJKl3a/0pov6JshYOn/kf0Dlbs3lqbzGVp2gw4darCkf0woNkP3nXtHu+AkcfFjUJxRJ+FyINBG8G0yc/dZwNL3qhtXHzG8DeLbg1HMXTvtSxUd2wuBZxfpw7FUgGz5SKztP1eA6VoFNLQM3eDaFw1MSAbK39q+9m9UlL3tsAOqEwz5dOPbPwzJLWpOqlu37ufy5KrpgmM2xQ64TWQBGf+uMXIdY="
+    # DOCKER_PASS
+    - secure: "c5yaO7ApHjqS71INfFjn7toCxh+jF5ZbHn83sQu9PnliXSXe0Oxvy5qsE1vVY7u19F6MaK11dMz6RWDu+8hB5lYUZvnjz7zcc+xUyZOfaG0XPIYtxWG6l4EXcoD+F3Knazq7DB5fypmPw0LXFe5CiD9Ob+H5nTw0ZAkTTYXBl7sCLNbIyVDTEIuxZ6TKJL/zdrNOLTpnj0lWaDL29KcABzHRkqF2NiGQ4aRv2U4tKiVlNzmB+j2vg83QnxCK/pALN+pZxTUP1b8yVXMt8b4o0T8wISgnsW5QXWWjP3i7f2yCX/TtVuEqzBY7MmMEZqYxd3dndoelRMlTv1ZvsIIurAyHLlM5yb9yGLm84uar1P4mRdgKlX7zrvkeMLQ2Q8eUUnd1aJIvUSwrRKroRVztY32d/AMg7/2xWSwySl68g9/A7DP6tM3hDdiEyX3FanadyYjxfc2pIsyJR/SD+z9McOkBEyShK7Tg8gEIiePiRDdBW0jKXenB7LOpPwfuQKbHStLtM6z70DdDVh2Y27X0ncR5MtP+xxLus800vUVqtyI91TE5rsGinMsLyS40pwYMYY2j59DDnSx40F4N1IDQbfS4RfHucPDGJqiWUMvB2y/Zti8imOzQgNoI5ea0IAZodN70rAcwFqP0rRpw31mGP3wYraaVlxN7lB9Two2zdYI="
+    # AUTH_TOKEN
+    - secure: "GDRUw6ixBr9g/fcBniXI1PMnWIcReBIN4qjUHgLLP+9RMBmW/gMkwBZmqglcocdVFBGY3umRrjd7FqoeYUU7rgB37tT0FL2S/ibUR2XFq8pWhjqEUPDfgexbN9dm3ZIbGqJuh9B/0NERjChDsUZQZZ/q2wY1MrdRupHdotbfuhGg3WT8IPSGX+13eTTFGX0m+ce5traam/pHIbI06oxrhkfDtMH2+WM7Pwcs/XE5pz8qVJUADR0ikSQ8bYn6bcMhsvvpcpu7M9mCoCZGznXyduVJNHvmjeLXea8QaT2CKVvRlT8ktxOjKeMkOqMVYBVyQdkLkrkY2sTd7oRqyLme27jzBE6RteXHEzmnwT8qsXn7d7BWw+AWrG53m5sATRSjpoyzMufIJYXk7v9fG1Q7zghiFRvvE6fc2yebdcK+2RwYXmv4YOCNg8fFVTGcwj+Ehu6KNpCYtTcOmxrUhMBzrr06j1u2NTy8/HUHmII6VyZwchWKbvJlZpsyUqsdZM8etYbsfBTomF1dNNEcPokWgxal8+wtwgZr44TgC50pbOBLVfbUUcpGLWbCgSILR/LHfbEY/KNfsxc/HJSvNqTZN/Chj6AySyLRDtr789O6PZDPT2MWIOcNYRLU8TB0BoIf8YnNpuaeCkm7F0FJnAr+4b70HnVAUEPEvI0vB8MzKH4="
+    
+services:
+  - docker
+
+stages:
+  - name: build
+  - name: deploy
+
+jobs:
+  include:
+    - stage: build
+      script:
+        - docker login -u $DOCKER_USER -p $DOCKER_PASS
+        - make
+        - make dockerimage
+        - make push
+    - stage: deploy
+      env:
+        # DOCKER_HOST
+        - secure: "HWGoD1u2N7a00QynlAJVURDtkBliMHHQ8HNWdklrg1YTjnKtPe8rI7zq4Q8C4EHIpth0nwssT63u6WX4n5dyu6tRGOaJ+9RRJh/vMrWv0VSSlznALpcvkKVq9czXNqH4dhJr43O55BLx5nlJx9LtyxcgCV7U77fx6CvINycuHuY8MoFHWjXbFQMui9IHpOD1qsyYSz67xG/2oOfyXpZvszDE8nWm/RrJYMbwglGaeSv1oH3A8acaG+rL5BZWoTkJp/I0iSoBpCRxC+u7cpiefIiv4pr+lSh5hoD9aGWfjfiMLmkIotvbQ2e9fP8IN2g0ERVbmy1cvecJLK9V/qa3DzjAj5+dWdUUiuj+bBwZtvutrC9k2DBYgEQLxc7Pjyiqjkz3BvZBk0IPGbsMrXx5xlS0F9Cad9UkkJVWwpEGJ63S0nufSETLN/AmyxeJtCpjaeZ6e4KMCQ86gj4e0j6XtVHi4/oaF5+yYB68EeGLA3vEx5+fY/yttnfxIGuS8jQZKmiXX4mLh6g0CLjem3o06r1tMfT/s3FbPXb5TVuE+sBvVuUQ7x+jvRxIWgo9L02zdry6aXgt0dAvK8i9ZKXXII+dOxJNDhcHae0QyaG/HVfYieptvOEFAbK0D3XcBRtXHOCFx3/lBT3hc+muKrpgDGhJdLAmyonHPav5o0TEBJI="
+        - DOCKER_CERT_PATH="./docker-remote-secrets"
+        - DOCKER_TLS_VERIFY="True"
+      script:
+        - openssl aes-256-cbc -K $encrypted_34779be3c9b4_key -iv $encrypted_34779be3c9b4_iv -in docker-remote-secrets.tar.enc -out docker-remote-secrets.tar -d
+        - tar xvf docker-remote-secrets.tar # extracts the folder: docker-remote-secrets
+        - make deploy
