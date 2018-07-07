@@ -33,7 +33,7 @@ export class TurdApiService {
     let upload;
     try {
       upload = await this.http.delete(`${environment.apiUrl}/turds/${marker.id}`, {
-        headers: new HttpHeaders().set('Authorization', environment.authToken)
+        headers: new HttpHeaders().set('Authorization', 'bearer ' + environment.authToken)
       }).toPromise();
     } catch (error) {
       console.log(error.message);
