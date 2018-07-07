@@ -1,0 +1,21 @@
+version: '2.3'
+services:
+  shit-city-service:
+    image: threethink/turdsdog-admin-dashboard:${TRAVIS_COMMIT}
+    init: true
+    scale: 1
+    labels:
+      - "traefik.enable=true"
+      - "traefik.backend=admin-dashboard" # backend name
+      - "traefik.port=8080"
+      - "traefik.frontend.rule=Host:admin.turds.dog"
+      - "traefik.frontend.auth.basic=admin:$$apr1$$iG4ldoqa$$3jk4cWNN/gfNNj.vJcKnb."
+    cpu_count: 1
+    mem_reservation: 100m
+    mem_limit: 250000000
+    restart: on-failure
+    networks:
+      - production
+networks:
+  production:
+    external: true
