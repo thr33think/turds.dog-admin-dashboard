@@ -7,13 +7,9 @@ fullImageName := $(dockerHubOrg)/$(imageName):$(commitHash)
 # default make target
 all: build
 
-# install all dependencies and compile js files
-build:
-	@npm install && npm run build
-
 # build the docker image with the current git rev
-dockerimage:
-	@docker build -t $(fullImageName) .
+build:
+	@docker build --build-arg AUTH_TOKEN=$(AUTH_TOKEN) -t $(fullImageName) .
 
 # Publish the docker image. Should be only used by the CI
 push:

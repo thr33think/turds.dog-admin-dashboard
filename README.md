@@ -16,5 +16,4 @@ Admin dashboard for the turds.dog project
 
 __AUTH_TOKEN__ is the admin access token for the backend.
 
-1. `AUTH_TOKEN=bar make` Compile the web app
-2. `make dockerimage` Create the Docker Image
+1. `AUTH_TOKEN=<admin-auth-token> make` Compile the web app and build docker image
