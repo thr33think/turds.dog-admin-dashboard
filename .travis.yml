@@ -21,7 +21,7 @@ jobs:
     - stage: build
       script:
         - docker login -u $DOCKER_USER -p $DOCKER_PASS
-        - make
+        - make # Uses AUTH_TOKEN env var set by the CI
         - make dockerimage
         - make push
     - stage: deploy
