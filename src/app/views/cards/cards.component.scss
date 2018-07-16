@@ -23,16 +23,13 @@
   justify-content: center;
   flex-flow: row wrap;
   align-content: flex-end;
-
   .mat-card {
     margin: 0 5px 5px 0;
     width: 100px;
   }
-
   img {
     background-color: gray;
   }
-
   mat-card {
     cursor: pointer;
   }
@@ -44,4 +41,10 @@
 
 .margin-bot-10 {
   margin-bottom: 10px;
+}
+
+.center-items {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
 }
