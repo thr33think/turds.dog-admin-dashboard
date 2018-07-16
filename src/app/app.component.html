@@ -1,20 +1,19 @@
 <div class="mat-app-background basic-container">
   <mat-toolbar color="primary">
     <mat-toolbar-row>
-      <button mat-icon-button (click)="sidenav.toggle()">
+      <!-- <button mat-icon-button (click)="sidenav.toggle()">
         <mat-icon class="mat-icon material-icons" role="img" aria-hidden="true">more_vert</mat-icon>
-      </button>
+      </button> -->
       <span class="spacer"></span>
       <span>Turds.dog Admin Panel</span>
       <span class="spacer"></span>
     </mat-toolbar-row>
   </mat-toolbar>
   <mat-sidenav-container class="navigation">
-    <mat-sidenav #sidenav [mode]="mode.value">
+    <!-- <mat-sidenav #sidenav [mode]="mode.value">
       <button mat-button (click)="sidenav.toggle()" [routerLink]="['/cards']">Cards</button><br>
       <button mat-button (click)="sidenav.toggle()" [routerLink]="['/table']">Table</button>
-    </mat-sidenav>
-  
+    </mat-sidenav> -->
     <mat-sidenav-content>
       <router-outlet></router-outlet>
     </mat-sidenav-content>
