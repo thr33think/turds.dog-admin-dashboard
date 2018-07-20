@@ -59,7 +59,7 @@ export class InfoModalComponent implements OnInit {
   async updateMarker () {
     const result = await this.turdApi.updateMarker({
       ...this.updateMarkerPlaceholder,
-      visible: !!this.updateMarkerPlaceholder.visible
+      visible: (String(this.updateMarkerPlaceholder.visible) === 'true')
     });
     if (!result.error) {
       this.snackBar.open('UPDATE WAS SUCCESSFUL!', '👌 ', {
