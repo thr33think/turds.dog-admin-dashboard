@@ -32,9 +32,7 @@ export class TurdApiService {
   async deleteMarker(marker: Marker): Promise<any> {
     let upload;
     try {
-      upload = await this.http.delete(`${environment.apiUrl}/turds/${marker.id}`, {
-        headers: new HttpHeaders().set('Authorization', 'bearer ' + environment.authToken)
-      }).toPromise();
+      upload = await this.http.delete(`${environment.apiUrl}/turds/${marker.id}`).toPromise();
     } catch (error) {
       console.log(error.message);
       upload = { error: true, result: error.message };

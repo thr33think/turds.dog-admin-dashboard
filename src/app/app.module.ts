@@ -1,3 +1,5 @@
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { TurdApInterceptor } from './services/turds-api.interceptor';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
@@ -17,7 +19,6 @@ import { TurdApiService } from './services/turds-api.service';
 import { InfoModalComponent } from './views/cards/info-modal/info-modal.component';
 import { OptionsBarComponent } from './views/cards/options-bar/options-bar.component';
 import { ConfirmationComponent } from './views/cards/info-modal/confirmation/confirmation.component';
-
 
 @NgModule({
   declarations: [
@@ -39,7 +40,14 @@ import { ConfirmationComponent } from './views/cards/info-modal/confirmation/con
     MaterialModule,
     ReactiveFormsModule,
   ],
-  providers: [TurdApiService],
+  providers: [
+    TurdApiService,
+      {
+        provide: HTTP_INTERCEPTORS,
+        useClass: TurdApInterceptor,
+        multi: true
+      }
+  ],
   bootstrap: [AppComponent],
   entryComponents: [InfoModalComponent, ConfirmationComponent]
 })
