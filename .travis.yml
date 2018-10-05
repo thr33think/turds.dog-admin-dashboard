@@ -26,10 +26,10 @@ jobs:
     - stage: deploy
       env:
         # DOCKER_HOST
-        - secure: "HWGoD1u2N7a00QynlAJVURDtkBliMHHQ8HNWdklrg1YTjnKtPe8rI7zq4Q8C4EHIpth0nwssT63u6WX4n5dyu6tRGOaJ+9RRJh/vMrWv0VSSlznALpcvkKVq9czXNqH4dhJr43O55BLx5nlJx9LtyxcgCV7U77fx6CvINycuHuY8MoFHWjXbFQMui9IHpOD1qsyYSz67xG/2oOfyXpZvszDE8nWm/RrJYMbwglGaeSv1oH3A8acaG+rL5BZWoTkJp/I0iSoBpCRxC+u7cpiefIiv4pr+lSh5hoD9aGWfjfiMLmkIotvbQ2e9fP8IN2g0ERVbmy1cvecJLK9V/qa3DzjAj5+dWdUUiuj+bBwZtvutrC9k2DBYgEQLxc7Pjyiqjkz3BvZBk0IPGbsMrXx5xlS0F9Cad9UkkJVWwpEGJ63S0nufSETLN/AmyxeJtCpjaeZ6e4KMCQ86gj4e0j6XtVHi4/oaF5+yYB68EeGLA3vEx5+fY/yttnfxIGuS8jQZKmiXX4mLh6g0CLjem3o06r1tMfT/s3FbPXb5TVuE+sBvVuUQ7x+jvRxIWgo9L02zdry6aXgt0dAvK8i9ZKXXII+dOxJNDhcHae0QyaG/HVfYieptvOEFAbK0D3XcBRtXHOCFx3/lBT3hc+muKrpgDGhJdLAmyonHPav5o0TEBJI="
+        - secure: "PPAnIfynIPQ+F7wOVtFhXjf4i+qXZM4Lg8ME8JnCig1yTuBgKtv6eZVDzYqC05h86cM0RfTah3C3XbyMIYNERAoLlozp1pIZ2s32mXkSVixQiR0egHYdMq48iP2Fs43rOr+tKey/ZGAg3UNdpA7r/1wnbqoiztXAOhHNkAbQdri1N4+VrD61KL45UCsC+9m+9pGPJ4TW8NjIvnxI0/czIQlOL+QSO2gCbwvq0vXJ8g7MIJpAHu7cJjJmXS2RD41naq0TDTKZ7T0pDt7qcUTPHYWJk1+/DMt7m4ee9NE+ZV2X5g3Yy72WHZr2AkKvp7/D6LTIOq+ZH7ht74d/FbP5BEWgP2GOv3p9Ef63EiDHh9GrzP437Uj/DzdwKgOCvLeqAzXcF8OqOhZvXAUII5/eiU7detxrIoTu6AFDFUBSUSV+clYvPbb/cNpuljZeBk9y0ZTav2DEASSOQfsL7RczzE3gWXYMPSzUrWoaFQnbC/azZIwVaLQhWdkm85Xcal6Idb/+BRt1RrahQck/xcae/UQGysNcocnpwnUqPeaALawBeYwMqSmT/aKDcS5zwuMxA4PnLxmo/4ZDVj9uG+3pjHnAiQ6+M9MbcFkP1mAIGtKqxcneLy16Eom7TnT4vWyWbvSiKnJSNOq3pSKzWZ2hLIb5RWHc1ISbwaeqJruPYUo="
         - DOCKER_CERT_PATH="./docker-remote-secrets"
         - DOCKER_TLS_VERIFY="True"
       script:
-        - openssl aes-256-cbc -K $encrypted_34779be3c9b4_key -iv $encrypted_34779be3c9b4_iv -in docker-remote-secrets.tar.enc -out docker-remote-secrets.tar -d
+        - openssl aes-256-cbc -K $encrypted_34779be3c9b4_key -iv $encrypted_34779be3c9b4_iv -in docker-remote-secrets.tar.enc -out docker-remote-secrets.tar-d
         - tar xvf docker-remote-secrets.tar # extracts the folder: docker-remote-secrets
         - make deploy
