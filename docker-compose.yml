@@ -10,6 +10,7 @@ services:
       - "traefik.port=8080"
       - "traefik.frontend.rule=Host:admin.turds.dog"
       - "traefik.frontend.auth.basic=admin:$$apr1$$iG4ldoqa$$3jk4cWNN/gfNNj.vJcKnb."
+      - "traefik.docker.network=loadbalancer"
     cpu_count: 1
     mem_reservation: 100m
     mem_limit: 250000000
