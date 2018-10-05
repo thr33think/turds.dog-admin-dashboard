@@ -17,6 +17,9 @@ services:
     restart: on-failure
     networks:
       - dogturds
+      - loadbalancer
 networks:
   dogturds:
+    external: true
+  loadbalancer:
     external: true
